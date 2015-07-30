@@ -1,2 +1,6 @@
 # cloudpassage-code-test
-The source code files for Cloud Passage's coding exercise.
+This repository contains the source code and a small input data file
+for Cloud Passage's coding exercise.
+
+To run the program, download both files and run:
+'ruby rover.rb input_file'

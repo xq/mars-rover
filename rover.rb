@@ -4,7 +4,7 @@
 This file contains the implementation details to CloudPassages coding test
 by Thomas Pastinsky. To run it, execute the file with ruby and provide
 an input file, for example:
-'ruby roverOO_thomasPastinsky.rb inputFile.txt'
+'ruby rover.rb inputFile.txt'
 =end
 
 # World destroying errors will be thrown with this exception

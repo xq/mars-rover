@@ -4,7 +4,7 @@
 This file contains the implementation details to CloudPassages coding test
 by Thomas Pastinsky. To run it, execute the file with ruby and provide
 an input file, for example:
-'ruby rover.rb inputFile.txt'
+'ruby roverOO_thomasPastinsky.rb inputFile.txt'
 =end
 
 # World destroying errors will be thrown with this exception
@@ -28,7 +28,7 @@ class Grid
 
 	# Keep track of rovers on the grid for collision avoidance
 	def add_rover(rover)
-		if !checkBounds(rover.position) || rover.position.any?{|coord| coord < 0}
+		if !check_bounds(rover.position) || rover.position.any?{|coord| coord < 0}
 		  raise MarsInitializationException.new("Rovers initial position must not exceed the grid bounds")
 		end
 		@rovers << rover
@@ -43,7 +43,7 @@ class Grid
 	end
 
 	# Make sure the robot doesn't go astray
-	def checkBounds(coordinates)
+	def check_bounds(coordinates)
 		if(coordinates[0] > upper_bounds[0])
 			return false
 		end
@@ -69,17 +69,17 @@ class Rover
 	def initialize(input, grid)
 		orientation = input.split
 		@position = [orientation[0].to_i, orientation[1].to_i]
-		@direction = cardinalToCoordinates(orientation[2])
+		@direction = cardinal_to_coordinates(orientation[2])
 		@grid = grid
 		@grid.add_rover(self)
 	end
 
 	# Print out the cardinal representation of a given coordinate
-	def cardinalToCoordinates(cardinal)
+	def cardinal_to_coordinates(cardinal)
 		COMPASS.each{|key, value| return value if cardinal == key}
 	end
 	# Print out the cardinal representation of a given coordinate
-	def coordinatesToCardinal(coordinates)
+	def coordinates_to_cardinal(coordinates)
 		COMPASS.each{|key, value| return key if coordinates == value}
 	end
 
@@ -97,7 +97,7 @@ class Rover
 		potentialX = @position[0] + @direction[0]
 		potentialY = @position[1] + @direction[1]
 		potentialMove = [potentialX, potentialY]
-		unless @grid.checkBounds(potentialMove)
+		unless @grid.check_bounds(potentialMove)
 			puts "Unable to move, out of bounds error.\nTrying next processable move.." 
 			return false
 		end
@@ -105,7 +105,7 @@ class Rover
 			@position[0] = potentialX
 			@position[1] = potentialY
 		else
-			cardinal = coordinatesToCardinal(@direction)
+			cardinal = coordinates_to_cardinal(@direction)
 			puts "Unable to move #{cardinal} to #{@position.join(",")} as"\
 			     " it is blocked by another rover.\nTrying next prcoessable move.."
 			return false
@@ -114,7 +114,7 @@ class Rover
 	end
 
 	# Update rover position on grid
-	def updatePosition(line)
+	def update_position(line)
 		local = line.strip.split("")
 		local.each do |action|
 			case action
@@ -128,7 +128,7 @@ class Rover
 				return puts "Unidentified character: " + action
 			end
 		end
-		cardinal = coordinatesToCardinal(@direction)
+		cardinal = coordinates_to_cardinal(@direction)
 		puts "#{@position[0]} #{@position[1]} #{cardinal}"
 	end
 
@@ -177,7 +177,7 @@ class Mars
 
 	# Updates a rover given the appropriate movement input on the mars grid.
 	def update_rover
-		@rover.updatePosition(@current_line)
+		@rover.update_position(@current_line)
 	end
 
 	# Initializes the Mars grid which defines the available movements on Mars.

@@ -1,4 +1,4 @@
-# cloudpassage-code-test
+# CloudPassage Code Test
 This repository contains the source code and a small input data file
 for Cloud Passage's coding exercise.
 
